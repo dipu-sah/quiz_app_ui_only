@@ -5,8 +5,10 @@ import {
   FormControl,
   FormLabel,
 } from "@mui/material";
+import { useState } from "react";
 import { AppCheckBoxProps } from "./AppCheckBox.props";
 export function AppCheckBox(props: AppCheckBoxProps) {
+  const [selectedOptions, setSelectedOption] = useState<string[]>([]);
   return (
     <FormControl fullWidth>
       <FormLabel>{props.label}</FormLabel>
@@ -24,9 +26,23 @@ export function AppCheckBox(props: AppCheckBoxProps) {
           return (
             <FormControlLabel
               key={index}
-              control={<Checkbox required={true} />}
+              checked={selectedOptions.findIndex((e) => e == value) >= 0}
+              control={<Checkbox required={props.required && !!selectedOptions.length} />}
               label={label}
               value={value}
+              onChange={(_, isChecked) => {
+                if(isChecked){
+                  setSelectedOption((e) => [
+                    ...e.filter((x) => x !== value),
+                    value,
+                  ]);
+                }else{
+                  setSelectedOption((e) => [
+                    ...e.filter((x) => x !== value),
+                  ]);
+                }
+               
+              }}
             />
           );
         })}

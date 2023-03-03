@@ -17,9 +17,6 @@ export function AppCarousel({
     <Swiper
       className="h-full w-full"
       spaceBetween={50}
-      onSwiper={(e) => {
-        console.log(e);
-      }}
       modules={[
         Navigation,
         Pagination,
